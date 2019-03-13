@@ -7,6 +7,7 @@ from collections import deque
 
 def main(lines, pattern, history=5):
 	previous_lines = deque(maxlen=history)
+	#deque（maxlen=N）的意思是建一个固定长度的队列，当有新的记录加入而队列已经满时，会自动移除老的记录.
 	for line in lines:
 		if pattern in line:
 			yield line, previous_lines
@@ -14,8 +15,11 @@ def main(lines, pattern, history=5):
 
 #example use on a file
 if __name__ == '__main__':
+#注意这里的用法 让你写的脚本模块既可以导入到别的模块中用，另外该模块自己也可执行
+#如果调用的是同一个文件下的，可以用main 如果是另一个文件，在main处就写成文件名
+#可以带着这行语句去搜索 有很多解释
 	with open('somefile.txt') as f:
-		for line, prevlines in main(f, '古今皆如此', 5):
+		for line, prevlines in main(f, '古今皆如此', 5): #我们只输出最后检查的5行，更多的不显示
 			for pline in prevlines:
 				print(pline, end='')
 				print('-'*10) # 输出十个分隔符来划分
