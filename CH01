@@ -1,0 +1,21 @@
+#This is the code of 1.3.2
+#Please use it with a txt named “something”
+#一个简单的文本匹配程序，当发现有匹配项目时，输出挡墙的匹配行以及最后检查过的N行文本 注意是检查过的！
+#!/usr/bin/env python3
+#-*- coding:utf-8 -*-
+from collections import deque
+
+def main(lines, pattern, history=5):
+	previous_lines = deque(maxlen=history)
+	for line in lines:
+		if pattern in line:
+			yield line, previous_lines
+		previous_lines.append(line)
+
+#example use on a file
+if __name__ == '__main__':
+	with open('somefile.txt') as f:
+		for line, prevlines in main(f, '古今皆如此', 5):
+			for pline in prevlines:
+				print(pline, end='')
+				print('-'*10) # 输出十个分隔符来划分
